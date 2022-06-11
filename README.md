@@ -16,7 +16,7 @@ Everything is based on the original [Google Cloud documentation](https://cloud.g
 This repo has the advantage that everything is deployed automatically thanks to Terraform.
 You don't have to set up all the steps each time for additional projects.
 
-It also creates a separate custom role that can only unlink invoicing, but not enable it.
+It also creates a separate custom role that can only unlink the billing account from the project, but not enable it.
 This has the advantage that only a billing administrator can enable the billing back and not the project itself.
 
 **Recommendation:** If you have a hard funds limit, set your maximum budget below your available funds to account for billing delays.
@@ -60,7 +60,7 @@ bash enable-services.sh
 
 ### Deploy
 
-Now you can create a budget alert and Cloud Function:
+Now you can create a budget alert and Cloud Function for this project:
 ```bash
 # Stop billing if 1000 USD are exceeded
 terraform apply \
@@ -82,12 +82,12 @@ In detail the following is added to the project:
 
 You can customize the setup with the following Terraform input variables:
 
-| Variable     | Description | Default |
-|--------------|----------------------------------|---|
-| `project_id` | The project ID for the resources |   |
-| `pubsub_topic` | Name of the Pub/Sub topic | cap-billing-alert |
-| `target_amount` | Set maximum monthly budget amount (currency as in billing account) | 1000 |
-| `region` | Region for the resources | us-central1 |
+| Variable        | Description                                                        | Default           |
+|-----------------|--------------------------------------------------------------------|-------------------|
+| `project_id`    | The project ID for the resources and budget alert                  |                   |
+| `pubsub_topic`  | Name of the Pub/Sub topic                                          | cap-billing-alert |
+| `target_amount` | Set maximum monthly budget amount (currency as in billing account) | 1000              |
+| `region`        | Region for the resources                                           | us-central1       |
 
 **Examples**
 
