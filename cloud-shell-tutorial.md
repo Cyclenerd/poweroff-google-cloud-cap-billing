@@ -22,21 +22,21 @@ terraform init
 ## Project
 
 Set the project that should be stopped when a certain amount is exceeded:
-```shell
+```bash
 gcloud config set project YOUR-GOOGLE-CLOUD-PROJECT
 ```
 
 ## APIs
 
 Enable required APIs and services:
-```shell
+```bash
 bash enable-services.sh
 ```
 
 ## Deploy
 
 Now you can create a budget alert and Cloud Function:
-```shell
+```bash
 # Stop billing if 1000 USD are exceeded
 terraform apply -var="project_id=$GOOGLE_CLOUD_PROJECT,target_amount=1000"
 ```
@@ -48,16 +48,16 @@ The billing account will be removed.
 Do it only if you are sure and the project is not important.
 
 Check active billing account:
-```shell
+```bash
 gcloud beta billing projects describe "$GOOGLE_CLOUD_PROJECT" | grep billingAccountName
 ```
 
 Send a message that triggers the Cloud Function and disables billing:
-```shell
+```bash
 gcloud pubsub topics publish "cap-billing-alert" --message='{ "costAmount" : 2, "budgetAmount": 1 }'
 ```
 
 Wait a while... Billing should then be disabled.
-```shell
+```bash
 gcloud beta billing projects describe "$GOOGLE_CLOUD_PROJECT" | grep billingAccountName
 ```
