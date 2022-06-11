@@ -37,8 +37,9 @@ bash enable-services.sh
 
 Now you can create a budget alert and Cloud Function:
 ```bash
-# Stop billing if 1000 USD are exceeded
-terraform apply -var="project_id=$GOOGLE_CLOUD_PROJECT,target_amount=1000"
+terraform apply \
+  -var="project_id=$GOOGLE_CLOUD_PROJECT" \
+  -var="target_amount=1000"
 ```
 
 ## Done

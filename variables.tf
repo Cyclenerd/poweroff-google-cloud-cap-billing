@@ -45,7 +45,7 @@ variable "target_amount" {
   default     = "1000"
   validation {
     # https://cloud.google.com/billing/docs/reference/budget/rest/v1/billingAccounts.budgets#BudgetAmount
-    condition     = can(regex("^1[0-9]+$", var.target_amount))
+    condition     = can(regex("^[0-9]+$", var.target_amount))
     error_message = "Specify amount as 64-bit signed integer (1 - 10000000..)!"
   }
 }

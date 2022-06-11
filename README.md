@@ -58,7 +58,9 @@ bash enable-services.sh
 Now you can create a budget alert and Cloud Function:
 ```bash
 # Stop billing if 1000 USD are exceeded
-terraform apply -var="project_id=$GOOGLE_CLOUD_PROJECT,target_amount=1000"
+terraform apply \
+  -var="project_id=$GOOGLE_CLOUD_PROJECT" \
+  -var="target_amount=1000"
 ```
 
 In detail the following is added to the project:
@@ -88,7 +90,9 @@ Via command:
 ```bash
 # Stop billing if 5 USD are exceeded and deploy everything in europe-west4
 terraform apply \
-  -var="project_id=$GOOGLE_CLOUD_PROJECT,target_amount=5,region=europe-west4"
+  -var="project_id=$GOOGLE_CLOUD_PROJECT" \
+  -var="target_amount=5" \
+  -var="region=europe-west4"
 ```
 
 Or via config file `terraform.tfvars`:
