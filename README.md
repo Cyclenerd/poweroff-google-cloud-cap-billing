@@ -34,7 +34,7 @@ Trust repo:
 
 You need to be the Owner and Billing Account Administrator of the project.
 
-### Clone
+### 1️⃣ Clone
 
 Clone this repo and initial setup:
 ```bash
@@ -43,7 +43,7 @@ cd poweroff-google-cloud-cap-billing
 terraform init
 ```
 
-### Project
+### 2️⃣ Set Project
 
 Set the project that should be stopped when a certain amount is exceeded:
 ```bash
@@ -51,14 +51,14 @@ gcloud auth login
 gcloud config set project YOUR-GOOGLE-CLOUD-PROJECT
 ```
 
-### APIs
+### 3️⃣ Enable APIs
 
 Enable required APIs and services:
 ```bash
 bash enable-services.sh
 ```
 
-### Deploy
+### 4️⃣ Deploy
 
 Now you can create a budget alert and Cloud Function for this project:
 ```bash
@@ -117,7 +117,7 @@ terraform apply
 » [Terraform Help](https://www.terraform.io/language/values/variables)
 
 
-### Test
+### 💥 Test
 
 You can perform a test.
 The billing account will be removed.
@@ -129,7 +129,7 @@ gcloud beta billing projects describe "$GOOGLE_CLOUD_PROJECT" | grep billingAcco
 ```
 
 Send a message that triggers the Cloud Function and disables billing:
-```shell
+```bash
 gcloud pubsub topics publish "cap-billing-alert" --message='{ "costAmount" : 2, "budgetAmount": 1 }'
 ```
 
@@ -138,7 +138,7 @@ Wait a while... Billing should then be disabled.
 gcloud beta billing projects describe "$GOOGLE_CLOUD_PROJECT" | grep billingAccountName
 ```
 
-## Enable Billing
+## 💸 Enable Billing
 
 Enable billing for an existing project:
 
@@ -146,7 +146,7 @@ Enable billing for an existing project:
 
 » [Google documentation](https://cloud.google.com/billing/docs/how-to/modify-project#enable_billing_for_an_existing_project)
 
-## Prerequisites
+## 📎 Prerequisites
 
 To run the commands described in this repo, you need the following:
 
