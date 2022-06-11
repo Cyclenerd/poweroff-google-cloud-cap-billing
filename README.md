@@ -33,7 +33,7 @@ You need to be the Owner and Billing Account Administrator of the project.
 
 Clone this repo and initial setup:
 ```bash
-git clone
+git clone https://github.com/Cyclenerd/poweroff-google-cloud-cap-billing.git
 cd poweroff-google-cloud-cap-billing
 terraform init
 ```
