@@ -25,7 +25,7 @@ It will also create a separate custom role that can only cap the billing but not
 Run all tasks in the free Google Cloud Shell.
 All necessary tools (`gcloud` and `terraform`) are already installed.
 
-[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.png)](https://shell.cloud.google.com/cloudshell/open?cloudshell_git_repo=https://github.com/Cyclenerd/poweroff-google-cloud-cap-billing&cloudshell_git_branch=master&cloudshell_tutorial=cloud-shell-tutorial.md)
+[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.png)](https://shell.cloud.google.com/cloudshell/open?shellonly=true&cloudshell_git_repo=https://github.com/Cyclenerd/poweroff-google-cloud-cap-billing&cloudshell_git_branch=master&cloudshell_tutorial=cloud-shell-tutorial.md)
 
 You need to be the Owner and Billing Account Administrator of the project.
 
