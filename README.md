@@ -11,12 +11,13 @@ You might want cap costs because you have a hard limit on how much money you can
 |-------------|
 | When you remove Cloud Billing from your project, all resources are shut down. The resources may not shut down gracefully and be irretrievably deleted. There is no gracefully recovery if you disable Cloud Billing. You can re-enable Cloud Billing, but there is no guarantee that the service will be restored and manual configuration is required. |
 
-This repo is based on the original [Google Cloud documentation](https://cloud.google.com/billing/docs/how-to/notify#cap_disable_billing_to_stop_usage).
+Everything is based on the original [Google Cloud documentation](https://cloud.google.com/billing/docs/how-to/notify#cap_disable_billing_to_stop_usage).
 
 This repo has the advantage that everything is deployed automatically thanks to Terraform.
-You don't have to set up all the steps again each time for more projects.
+You don't have to set up all the steps each time for additional projects.
 
-It will also create a separate custom role that can only cap the billing but not enable it. This has the advantage that only a billing administrator can enable the billing back and not the project itself.
+It also creates a separate custom role that can only unlink invoicing, but not enable it.
+This has the advantage that only a billing administrator can enable the billing back and not the project itself.
 
 **Recommendation:** If you have a hard funds limit, set your maximum budget below your available funds to account for billing delays.
 
