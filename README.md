@@ -27,6 +27,10 @@ All necessary tools (`gcloud` and `terraform`) are already installed.
 
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.png)](https://shell.cloud.google.com/cloudshell/open?shellonly=true&ephemeral=false&cloudshell_git_repo=https://github.com/Cyclenerd/poweroff-google-cloud-cap-billing&cloudshell_git_branch=master&cloudshell_tutorial=cloud-shell-tutorial.md)
 
+Trust repo:
+
+![Screenshot: Cloud Shell trust repo](./img/trust-repo.jpg)
+
 You need to be the Owner and Billing Account Administrator of the project.
 
 ### Clone
