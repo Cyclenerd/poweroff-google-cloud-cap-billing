@@ -30,6 +30,7 @@ from google.cloud import billing
 PROJECT_ID = google.auth.default()[1]
 cloud_billing_client = billing.CloudBillingClient()
 
+
 def stop_billing(data: dict, context):
     pubsub_data = base64.b64decode(data["data"]).decode("utf-8")
     print(f"Data: {pubsub_data}")
