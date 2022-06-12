@@ -1,5 +1,8 @@
 # Automatic cost control by capping Google Cloud billing
 
+[![CI](https://github.com/Cyclenerd/poweroff-google-cloud-cap-billing/actions/workflows/ci.yml/badge.svg)](https://github.com/Cyclenerd/poweroff-google-cloud-cap-billing/actions/workflows/ci.yml)
+[![GitHub](https://img.shields.io/github/license/cyclenerd/poweroff-google-cloud-cap-billing)](https://github.com/Cyclenerd/poweroff-google-cloud-cap-billing/blob/master/LICENSE)
+
 With this repo you can cap costs and stop usage for a Google Cloud project by disabling Cloud Billing automatically.
 Removing the billing account from a project will cause all Google Cloud services in the project to terminate, including free-tier services.
 
