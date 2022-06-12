@@ -18,11 +18,15 @@ jobs:
     # The type of runner that the job will run on
     # https://github.com/actions/virtual-environments/
     # [x] shellcheck
+    # [_] flake8
     # [x] terraform
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Install dependencies 🔧
+        run: sudo apt-get install flake8
+
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout 🛎️
         uses: actions/checkout@v2
@@ -31,6 +35,10 @@ jobs:
       - name: ShellCheck 🔎
         run: shellcheck *.sh
 
+      # Check Python scripts
+      - name: Python 🔎
+        run: flake8 --ignore=W292 --max-line-length=127 --show-source --statistics function-source/*.py
+
       # Check Terraform
       - name: Terraform 🔎
-        run: terraform validate
+        run: terraform init && terraform validate
