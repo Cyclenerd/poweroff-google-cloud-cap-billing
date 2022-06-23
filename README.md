@@ -8,7 +8,7 @@
 With this repo you can cap costs and stop usage for a Google Cloud project by disabling Cloud Billing automatically.
 Removing the billing account from a project will cause all Google Cloud services in the project to terminate, including free-tier services.
 
-![Image: Architecture](./img/stop-billing.jpg)
+![Image: Architecture](https://raw.githubusercontent.com/Cyclenerd/poweroff-google-cloud-cap-billing/master/img/stop-billing.jpg)
 
 You might want cap costs because you have a hard limit on how much money you can spend on Google Cloud. This is typical for students, researchers, or developers working in sandbox environments. In these cases you want to stop the spending and might be willing to shutdown all your Google Cloud services and usage when your budget limit is reached.
 
@@ -35,7 +35,7 @@ All necessary tools (`gcloud` and `terraform`) are already installed.
 
 Trust repo:
 
-![Screenshot: Cloud Shell trust repo](./img/trust-repo.jpg)
+![Screenshot: Cloud Shell trust repo](https://raw.githubusercontent.com/Cyclenerd/poweroff-google-cloud-cap-billing/master/img/trust-repo.jpg)
 
 You need to be the Owner and Billing Account Administrator of the project.
 
@@ -147,7 +147,7 @@ gcloud beta billing projects describe "$GOOGLE_CLOUD_PROJECT" | grep billingAcco
 
 Enable billing for an existing project:
 
-![Screenshot: Enable billing](./img/enable-billing.jpg?v1)
+![Screenshot: Enable billing](https://raw.githubusercontent.com/Cyclenerd/poweroff-google-cloud-cap-billing/master/img/enable-billing.jpg?v1)
 
 » [Google documentation](https://cloud.google.com/billing/docs/how-to/modify-project#enable_billing_for_an_existing_project)
 
