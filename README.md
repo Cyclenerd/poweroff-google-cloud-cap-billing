@@ -1,7 +1,7 @@
 # Automatic cost control by capping Google Cloud billing
 
-![Bagde: Google Cloud](https://img.shields.io/badge/Google%20Cloud-%234285F4.svg?logo=google-cloud&logoColor=white)
-![Badge: Terraform](https://img.shields.io/badge/Terraform-%235835CC.svg?logo=terraform&logoColor=white)
+[![Bagde: Google Cloud](https://img.shields.io/badge/Google%20Cloud-%234285F4.svg?logo=google-cloud&logoColor=white)](#readme)
+[![Badge: Terraform](https://img.shields.io/badge/Terraform-%235835CC.svg?logo=terraform&logoColor=white)](#readme)
 [![Bagde: CI](https://github.com/Cyclenerd/poweroff-google-cloud-cap-billing/actions/workflows/ci.yml/badge.svg)](https://github.com/Cyclenerd/poweroff-google-cloud-cap-billing/actions/workflows/ci.yml)
 [![Bagde: GitHub](https://img.shields.io/github/license/cyclenerd/poweroff-google-cloud-cap-billing)](https://github.com/Cyclenerd/poweroff-google-cloud-cap-billing/blob/master/LICENSE)
 [![Bagde: Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/googlecloud?label=Google%20Cloud%20Platform&style=social)](https://www.reddit.com/r/googlecloud/comments/va0cc0/automating_cost_control_by_capping_google_cloud/)
