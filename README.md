@@ -1,9 +1,10 @@
 # Automatic cost control by capping Google Cloud billing
 
-[![CI](https://github.com/Cyclenerd/poweroff-google-cloud-cap-billing/actions/workflows/ci.yml/badge.svg)](https://github.com/Cyclenerd/poweroff-google-cloud-cap-billing/actions/workflows/ci.yml)
-[![GitHub](https://img.shields.io/github/license/cyclenerd/poweroff-google-cloud-cap-billing)](https://github.com/Cyclenerd/poweroff-google-cloud-cap-billing/blob/master/LICENSE)
-[![Terraform](https://img.shields.io/badge/IaC-Terraform-blue)](https://cloud.google.com/docs/terraform)
-[![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/googlecloud?label=Google%20Cloud%20Platform&style=social)](https://www.reddit.com/r/googlecloud/comments/va0cc0/automating_cost_control_by_capping_google_cloud/)
+![Bagde: Google Cloud](https://img.shields.io/badge/Google%20Cloud-%234285F4.svg?logo=google-cloud&logoColor=white)
+![Badge: Terraform](https://img.shields.io/badge/Terraform-%235835CC.svg?logo=terraform&logoColor=white)
+[![Bagde: CI](https://github.com/Cyclenerd/poweroff-google-cloud-cap-billing/actions/workflows/ci.yml/badge.svg)](https://github.com/Cyclenerd/poweroff-google-cloud-cap-billing/actions/workflows/ci.yml)
+[![Bagde: GitHub](https://img.shields.io/github/license/cyclenerd/poweroff-google-cloud-cap-billing)](https://github.com/Cyclenerd/poweroff-google-cloud-cap-billing/blob/master/LICENSE)
+[![Bagde: Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/googlecloud?label=Google%20Cloud%20Platform&style=social)](https://www.reddit.com/r/googlecloud/comments/va0cc0/automating_cost_control_by_capping_google_cloud/)
 
 With this repo you can cap costs and stop usage for a Google Cloud project by disabling Cloud Billing automatically.
 Removing the billing account from a project will cause all Google Cloud services in the project to terminate, including free-tier services.
