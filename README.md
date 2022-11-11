@@ -13,9 +13,12 @@ Removing the billing account from a project will cause all Google Cloud services
 
 You might want cap costs because you have a hard limit on how much money you can spend on Google Cloud. This is typical for students, researchers, or developers working in sandbox environments. In these cases you want to stop the spending and might be willing to shutdown all your Google Cloud services and usage when your budget limit is reached.
 
-| ⚠️ Warning |
-|-------------|
-| When you remove Cloud Billing from your project, all resources are shut down. The resources may not shut down gracefully and be irretrievably deleted. There is no gracefully recovery if you disable Cloud Billing. You can re-enable Cloud Billing, but there is no guarantee that the service will be restored and manual configuration is required. |
+> **Warning**
+> When you remove Cloud Billing from your project, all resources are shut down.
+> The resources may not shut down gracefully and be irretrievably deleted.
+> There is no gracefully recovery if you disable Cloud Billing.
+> You can re-enable Cloud Billing,
+> but there is no guarantee that the service will be restored and manual configuration is required.
 
 Everything is based on the original [Google Cloud documentation](https://cloud.google.com/billing/docs/how-to/notify#cap_disable_billing_to_stop_usage).
 
