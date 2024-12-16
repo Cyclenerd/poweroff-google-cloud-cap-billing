@@ -19,14 +19,17 @@ jobs:
     # https://github.com/actions/virtual-environments/
     # [x] shellcheck
     # [_] flake8
-    # [x] terraform
+    # [_] terraform
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Install dependencies 🔧
-        run: sudo apt-get install flake8
+        run: sudo apt-get install shellcheck flake8
 
+      # https://github.com/hashicorp/setup-terraform
+      - uses: hashicorp/setup-terraform@v3
+      
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout 🛎️
         uses: actions/checkout@v4
