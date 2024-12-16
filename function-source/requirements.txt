@@ -1,3 +1,3 @@
 # Function dependencies, for example:
 # package>=version
-google-cloud-billing==1.14.1
+google-cloud-billing==1.15.0
