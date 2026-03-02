@@ -28,7 +28,7 @@ jobs:
         run: sudo apt-get install shellcheck flake8
 
       # https://github.com/hashicorp/setup-terraform
-      - uses: hashicorp/setup-terraform@v3
+      - uses: hashicorp/setup-terraform@v4
       
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout 🛎️
