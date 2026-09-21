@@ -1,4 +1,4 @@
-# Copyright 2022 Nils Knieling
+# Copyright 2022-2026 Nils Knieling
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,23 +17,27 @@
 ###############################################################################
 
 terraform {
-  required_version = ">= 1.1.9"
+  required_version = ">= 1.12.2"
   required_providers {
     google = {
+      # https://registry.terraform.io/providers/hashicorp/google/latest/docs
       source  = "hashicorp/google"
-      version = ">= 4.23.0"
+      version = ">= 8.3.0"
     }
     null = {
+      # https://registry.terraform.io/providers/hashicorp/null/latest
       source  = "hashicorp/null"
-      version = ">= 3.1.1"
+      version = ">= 3.3.2"
     }
     random = {
+      # https://registry.terraform.io/providers/hashicorp/random/latest
       source  = "hashicorp/random"
-      version = ">= 3.1.0"
+      version = ">= 3.9.1"
     }
     archive = {
+      # https://registry.terraform.io/providers/hashicorp/archive/latest
       source  = "hashicorp/archive"
-      version = ">= 2.2.0"
+      version = ">= 2.8.1"
     }
   }
 }

@@ -1,4 +1,4 @@
-# Copyright 2022 Nils Knieling
+# Copyright 2022-2026 Nils Knieling
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -26,6 +26,56 @@ provider "google" {
 }
 
 ###############################################################################
+# ENABLE APIs and SERVICES
+###############################################################################
+
+# Enable required Google Cloud APIs and services.
+# APIs are NOT disabled on `terraform destroy` (disable_on_destroy = false).
+# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project_service
+resource "google_project_service" "my-cap-billing-services" {
+  for_each = toset([
+    # Service Usage API
+    "serviceusage.googleapis.com",
+    # Cloud Resource Manager API
+    "cloudresourcemanager.googleapis.com",
+    # Identity and Access Management (IAM) API
+    "iam.googleapis.com",
+    # Cloud Billing API
+    "cloudbilling.googleapis.com",
+    # Cloud Billing Budget API
+    "billingbudgets.googleapis.com",
+    # Cloud Pub/Sub API
+    "pubsub.googleapis.com",
+    # Cloud Storage API
+    "storage.googleapis.com",
+    # Cloud Logging API
+    "logging.googleapis.com",
+    # Cloud Build API
+    "cloudbuild.googleapis.com",
+    # Cloud Functions API
+    "cloudfunctions.googleapis.com",
+  ])
+
+  project = var.project_id
+  service = each.value
+
+  # Do not disable the API when the resource is destroyed
+  disable_on_destroy = false
+  # Do not disable dependent services when this service is disabled
+  disable_dependent_services = false
+}
+
+# Sleep and wait for the APIs to be fully enabled before creating resources.
+# Enabling an API is eventually consistent, so we wait to be on the safe side.
+# https://github.com/hashicorp/terraform/issues/17726#issuecomment-377357866
+resource "null_resource" "wait-for-services" {
+  provisioner "local-exec" {
+    command = "sleep 60"
+  }
+  depends_on = [google_project_service.my-cap-billing-services]
+}
+
+###############################################################################
 # GET DATA
 ###############################################################################
 
@@ -33,6 +83,7 @@ provider "google" {
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project
 data "google_project" "my-project" {
   project_id = var.project_id
+  depends_on = [null_resource.wait-for-services]
 }
 
 # Billing account
@@ -49,7 +100,7 @@ data "google_billing_account" "my-billing-account" {
 # Create service account
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_service_account
 resource "google_service_account" "my-cap-billing-service-account" {
-  project      = var.project_id
+  project      = data.google_project.my-project.project_id
   account_id   = "sa-cap-billing"
   display_name = "Cap Billing"
   description  = "Service Account to unlink project from billing account"
@@ -68,7 +119,7 @@ resource "null_resource" "wait-for-sa" {
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project_iam_custom_role
 # https://cloud.google.com/billing/docs/how-to/modify-project#disable_billing_for_a_project
 resource "google_project_iam_custom_role" "my-cap-billing-role" {
-  project = var.project_id
+  project = data.google_project.my-project.project_id
   # Camel case role id to use for this role. Cannot contain - character.
   role_id     = "myCapBilling"
   title       = "Cap Billing Custom Role"
@@ -82,10 +133,10 @@ resource "google_project_iam_custom_role" "my-cap-billing-role" {
 # Updates the IAM policy to grant a role to service account. Other members for the role for the project are preserved.
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project_iam
 resource "google_project_iam_member" "my-cap-billing-role-binding" {
-  project    = var.project_id
+  project    = data.google_project.my-project.project_id
   role       = google_project_iam_custom_role.my-cap-billing-role.name #roles/billing.projectManager
   member     = "serviceAccount:${google_service_account.my-cap-billing-service-account.email}"
-  depends_on = [google_project_iam_custom_role.my-cap-billing-role, null_resource.wait-for-sa]
+  depends_on = [null_resource.wait-for-sa]
 }
 
 ###############################################################################
@@ -95,23 +146,19 @@ resource "google_project_iam_member" "my-cap-billing-role-binding" {
 # Create Pub/Sub topic
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/pubsub_topic
 resource "google_pubsub_topic" "my-cap-billing-pubsub" {
-  project = var.project_id
+  project = data.google_project.my-project.project_id
   name    = var.pubsub_topic
   message_storage_policy {
     allowed_persistence_regions = ["${var.region}"]
-  }
-  labels = {
-    "terraform" = "true"
   }
 }
 
 # Create Pub/Sub subscription to have the possibility to read (pull) the messages via the console (dashboard)
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/pubsub_subscription
 resource "google_pubsub_subscription" "my-cap-billing-pubsub-pull" {
-  project    = var.project_id
-  name       = "${var.pubsub_topic}-pull"
-  topic      = google_pubsub_topic.my-cap-billing-pubsub.name
-  depends_on = [google_pubsub_topic.my-cap-billing-pubsub]
+  project = data.google_project.my-project.project_id
+  name    = "${var.pubsub_topic}-pull"
+  topic   = google_pubsub_topic.my-cap-billing-pubsub.name
 }
 
 ###############################################################################
@@ -122,7 +169,7 @@ resource "google_pubsub_subscription" "my-cap-billing-pubsub-pull" {
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/billing_budget
 resource "google_billing_budget" "my-cap-billing-budget" {
   billing_account = data.google_billing_account.my-billing-account.id
-  display_name    = "Unlink ${var.project_id} from billing account"
+  display_name    = "Unlink ${data.google_project.my-project.project_id} from billing account"
 
   amount {
     specified_amount {
@@ -146,8 +193,6 @@ resource "google_billing_budget" "my-cap-billing-budget" {
     # Must be false, otherwise it does not work
     disable_default_iam_recipients = false
   }
-
-  depends_on = [google_pubsub_topic.my-cap-billing-pubsub]
 }
 
 ###############################################################################
@@ -162,13 +207,10 @@ resource "random_uuid" "my-cap-billing-bucket" {
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket
 resource "google_storage_bucket" "my-cap-billing-bucket" {
   name                        = random_uuid.my-cap-billing-bucket.id
-  project                     = var.project_id
+  project                     = data.google_project.my-project.project_id
   location                    = var.region
   force_destroy               = true
   uniform_bucket_level_access = true
-  labels = {
-    "terraform" = "true"
-  }
 }
 
 # Create ZIP with source code for GCF
@@ -192,10 +234,6 @@ resource "google_storage_bucket_object" "my-cap-billing-archive" {
   name   = "function-source-${data.archive_file.my-cap-billing-source.output_md5}.zip"
   bucket = google_storage_bucket.my-cap-billing-bucket.name
   source = data.archive_file.my-cap-billing-source.output_path
-  depends_on = [
-    google_storage_bucket.my-cap-billing-bucket,
-    data.archive_file.my-cap-billing-source
-  ]
 }
 
 ###############################################################################
@@ -221,7 +259,7 @@ resource "random_id" "my-cap-billing-function" {
 resource "google_cloudfunctions_function" "my-cap-billing-function" {
   name        = "cap-billing-${random_id.my-cap-billing-function.hex}"
   description = "Function to unlink project from billing account"
-  project     = var.project_id
+  project     = data.google_project.my-project.project_id
   region      = var.region
   # Runtime ID
   # https://docs.cloud.google.com/functions/docs/runtime-support#python
@@ -242,14 +280,8 @@ resource "google_cloudfunctions_function" "my-cap-billing-function" {
       retry = false
     }
   }
-  labels = {
-    terraform = "true"
-  }
   environment_variables = {
     MY_BUDGET_ALERT_ID = "${google_billing_budget.my-cap-billing-budget.id}"
   }
-  depends_on = [
-    google_pubsub_topic.my-cap-billing-pubsub,
-    null_resource.wait-for-archive
-  ]
+  depends_on = [null_resource.wait-for-archive]
 }

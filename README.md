@@ -19,7 +19,7 @@ You might want cap costs because you have a hard limit on how much money you can
 > You can re-enable Cloud Billing,
 > but there is no guarantee that the service will be restored and manual configuration is required.
 
-Everything is based on the original [Google Cloud documentation](https://cloud.google.com/billing/docs/how-to/notify#cap_disable_billing_to_stop_usage).
+Everything is based on the original [Google Cloud documentation](https://docs.cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications#cap_disable_billing_to_stop_usage).
 
 This repo has the advantage that everything is deployed automatically thanks to Terraform.
 You don't have to set up all the steps each time for additional projects.
@@ -51,22 +51,15 @@ cd poweroff-google-cloud-cap-billing
 terraform init
 ```
 
-### 2️⃣ Set Project
+### 2️⃣ Login & Set Project
 
 Set the project that should be stopped when a certain amount is exceeded:
 ```bash
-gcloud auth login
+gcloud auth login --update-adc
 gcloud config set project YOUR-GOOGLE-CLOUD-PROJECT
 ```
 
-### 3️⃣ Enable APIs
-
-Enable required APIs and services:
-```bash
-bash enable-services.sh
-```
-
-### 4️⃣ Deploy
+### 3️⃣ Deploy
 
 Now you can create a budget alert and Cloud Function for this project:
 ```bash
@@ -76,8 +69,13 @@ terraform apply \
   -var="target_amount=1000"
 ```
 
+The required Google Cloud APIs and services are enabled automatically by Terraform
+before any other resources are created.
+The APIs are **not** disabled again on `terraform destroy`.
+
 In detail the following is added to the project:
 
+1. Required Google Cloud APIs and services
 1. Service account : `sa-cap-billing@...`
 1. Custom role : `myCapBilling`
 1. Pub/Sub topic : `cap-billing-alert`
@@ -152,16 +150,16 @@ Enable billing for an existing project:
 
 ![Screenshot: Enable billing](https://raw.githubusercontent.com/Cyclenerd/poweroff-google-cloud-cap-billing/master/img/enable-billing.jpg?v1)
 
-» [Google documentation](https://cloud.google.com/billing/docs/how-to/modify-project#enable_billing_for_an_existing_project)
+» [Google documentation](https://docs.cloud.google.com/billing/docs/how-to/modify-project#enable_billing_for_an_existing_project)
 
 ## 📎 Prerequisites
 
 To run the commands described in this repo, you need the following:
 
-1. Install the [Google Cloud SDK](https://cloud.google.com/sdk/install) version 319.0.0 or later
-1. Install [Terraform](https://www.terraform.io/downloads.html) version 1.1.9 or later.
+1. Install the [Google Cloud CLI](https://docs.cloud.google.com/sdk/docs/install-sdk) version 585.0.0 or later
+1. Install [Terraform](https://www.terraform.io/downloads.html) version 1.12.2 or later.
 1. Set up a Google Cloud
-   [billing account](https://cloud.google.com/billing/docs/how-to/manage-billing-account) and project.
+   [billing account](https://docs.cloud.google.com/billing/docs/how-to/manage-billing-account) and project.
 
 ## ❤️ Contributing
 

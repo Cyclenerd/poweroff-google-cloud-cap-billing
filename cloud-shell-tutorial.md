@@ -12,6 +12,25 @@ In this tutorial, you are going to set up a [automatic cost control by capping G
 
 Click the **Start** button to move to the next step.
 
+## Project Setup
+
+Select or create a project:
+
+<walkthrough-project-setup billing=true></walkthrough-project-setup>
+
+Enable the required APIs:
+
+<walkthrough-enable-apis apis="serviceusage.googleapis.com,cloudresourcemanager.googleapis.com,iam.googleapis.com,cloudbilling.googleapis.com,billingbudgets.googleapis.com,pubsub.googleapis.com,storage.googleapis.com,logging.googleapis.com,cloudbuild.googleapis.com,cloudfunctions.googleapis.com"></walkthrough-enable-apis>
+
+## Configure Cloud Shell Environment
+
+Set Google Cloud project ID. Replace with your current Google Cloud project ID:
+
+```bash
+export GOOGLE_CLOUD_PROJECT="<walkthrough-project-id/>"
+gcloud config set project "$GOOGLE_CLOUD_PROJECT"
+```
+
 ## Init
 
 Initial setup:
@@ -19,23 +38,11 @@ Initial setup:
 terraform init
 ```
 
-## Project
-
-Set the project that should be stopped when a certain amount is exceeded:
-```bash
-gcloud config set project YOUR-GOOGLE-CLOUD-PROJECT
-```
-
-## APIs
-
-Enable required APIs and services:
-```bash
-bash enable-services.sh
-```
-
 ## Deploy
 
-Now you can create a budget alert and Cloud Function:
+Now you can create a budget alert and Cloud Function.
+The required Google Cloud APIs and services are enabled automatically by Terraform
+before any other resources are created:
 ```bash
 terraform apply \
   -var="project_id=$GOOGLE_CLOUD_PROJECT" \

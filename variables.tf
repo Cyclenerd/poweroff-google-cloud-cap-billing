@@ -51,8 +51,8 @@ variable "target_amount" {
 }
 
 variable "region" {
-  type     = string
-  nullable = false
+  type        = string
+  nullable    = false
   description = "Region for the resources"
-  default  = "us-central1"
+  default     = "us-central1"
 }
