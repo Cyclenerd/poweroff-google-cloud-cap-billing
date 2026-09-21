@@ -53,10 +53,18 @@ terraform init
 
 ### 2️⃣ Login & Set Project
 
-Set the project that should be stopped when a certain amount is exceeded:
+Authenticate with Google Cloud:
+
 ```bash
 gcloud auth login --update-adc
-gcloud config set project YOUR-GOOGLE-CLOUD-PROJECT
+```
+
+Set the project that should be stopped when a certain amount is exceeded
+Replace `YOUR-GOOGLE-CLOUD-PROJECT` with your Google Cloud project ID:
+
+```bash
+export GOOGLE_CLOUD_PROJECT="YOUR-GOOGLE-CLOUD-PROJECT"
+gcloud config set project "$GOOGLE_CLOUD_PROJECT"
 ```
 
 ### 3️⃣ Deploy
