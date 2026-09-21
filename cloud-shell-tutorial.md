@@ -31,9 +31,17 @@ export GOOGLE_CLOUD_PROJECT="<walkthrough-project-id/>"
 gcloud config set project "$GOOGLE_CLOUD_PROJECT"
 ```
 
+Terraform isn't always installed in Cloud Shell.
+If you type `terraform`, you'll see instructions on how to install it.
+
+```bash
+terraform
+```
+
 ## Init
 
 Initial setup:
+
 ```bash
 terraform init
 ```
