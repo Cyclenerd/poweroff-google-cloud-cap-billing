@@ -224,8 +224,8 @@ resource "google_cloudfunctions_function" "my-cap-billing-function" {
   project     = var.project_id
   region      = var.region
   # Runtime ID
-  # https://cloud.google.com/functions/docs/concepts/exec#runtimes
-  runtime = "python39"
+  # https://docs.cloud.google.com/functions/docs/runtime-support#python
+  runtime = "python314"
   # Service account to run the function with
   service_account_email = google_service_account.my-cap-billing-service-account.email
   available_memory_mb   = 128

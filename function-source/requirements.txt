@@ -1,3 +1,4 @@
 # Function dependencies, for example:
 # package>=version
+# https://pypi.org/project/google-cloud-billing/
 google-cloud-billing==1.20.0
